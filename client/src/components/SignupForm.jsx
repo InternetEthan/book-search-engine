@@ -10,11 +10,18 @@ import { ADD_USER } from '../utils/mutations';
 
 const SignupForm = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState(
+    { 
+      username: "", 
+      email: "", 
+      password: "" 
+    });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+
+  const [addUser, { loading }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,7 +55,11 @@ try {
     });
   };
 
-  return (
+if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+
+ return (
     <>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>

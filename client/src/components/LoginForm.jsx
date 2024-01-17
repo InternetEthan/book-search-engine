@@ -2,19 +2,16 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-import { loginUser } from '../utils/API';
-import Auth from '../utils/auth';
-
-// Apollo Server
-import { useMutation } from '@apollo/client';
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  // Apollo Server
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [login, { loading }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -47,6 +44,10 @@ const LoginForm = () => {
       password: "",
     });
   };
+
+if (loading) {
+    return <h2>LOADING...</h2>;
+  }
 
   return (
     <>
